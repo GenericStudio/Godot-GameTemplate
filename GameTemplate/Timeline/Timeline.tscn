@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Timeline/Timeline.gd" type="Script" id=1]
+[ext_resource path="res://Timeline/Left.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Frame"
 
 [node name="Timeline" type="Control"]
 anchor_right = 1.0
@@ -10,40 +14,76 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_top = 0.600006
+margin_right = 221.0
+margin_bottom = 44.6
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timeline" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 221.0
+margin_bottom = 20.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Prev" type="Button" parent="HBoxContainer"]
+[node name="Prev" type="Button" parent="VBoxContainer/Timeline"]
 margin_right = 67.0
-margin_bottom = 40.0
+margin_bottom = 20.0
 text = "Previous"
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/Timeline"]
 margin_left = 71.0
-margin_top = 13.0
+margin_top = 3.0
 margin_right = 71.0
-margin_bottom = 27.0
+margin_bottom = 17.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Next" type="Button" parent="HBoxContainer"]
+[node name="Next" type="Button" parent="VBoxContainer/Timeline"]
 margin_left = 75.0
 margin_right = 117.0
-margin_bottom = 40.0
+margin_bottom = 20.0
 text = "Next"
 
-[node name="Scrubber" type="HSlider" parent="HBoxContainer"]
+[node name="Scrubber" type="HSlider" parent="VBoxContainer/Timeline"]
 margin_left = 121.0
 margin_right = 221.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 100, 16 )
 rounded = true
-[connection signal="pressed" from="HBoxContainer/Prev" to="." method="_on_Prev_pressed"]
-[connection signal="pressed" from="HBoxContainer/Next" to="." method="_on_Next_pressed"]
-[connection signal="value_changed" from="HBoxContainer/Scrubber" to="." method="_on_Scrubber_value_changed"]
+
+[node name="Inputs" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 221.0
+margin_bottom = 44.0
+
+[node name="Left" type="Button" parent="VBoxContainer/Inputs"]
+margin_right = 36.0
+margin_bottom = 20.0
+text = "Left"
+script = ExtResource( 2 )
+
+[node name="Right" type="Button" parent="VBoxContainer/Inputs"]
+margin_left = 40.0
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Right"
+
+[node name="Jump" type="Button" parent="VBoxContainer/Inputs"]
+margin_left = 88.0
+margin_right = 132.0
+margin_bottom = 20.0
+text = "Jump"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Frame = SubResource( 1 )
+[connection signal="pressed" from="VBoxContainer/Timeline/Prev" to="." method="_on_Prev_pressed"]
+[connection signal="pressed" from="VBoxContainer/Timeline/Next" to="." method="_on_Next_pressed"]
+[connection signal="value_changed" from="VBoxContainer/Timeline/Scrubber" to="." method="_on_Scrubber_value_changed"]

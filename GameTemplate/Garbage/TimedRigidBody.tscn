@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://Garbage/TimedNode.gd" type="Script" id=2]
+[ext_resource path="res://Actors/Player/Box.gd" type="Script" id=2]
 [ext_resource path="res://Timeline/TimelineInterface.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0207
 
-[node name="TimedNode" type="RigidBody2D" groups=[
+[node name="TimedNode" type="KinematicBody2D" groups=[
 "timed",
 ]]
 script = ExtResource( 2 )

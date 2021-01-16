@@ -18,8 +18,8 @@ var current_frame:float = 0
 var elapsed_time:float = 0.0
 var _physics_frames:int = 0
 
-onready var label = $HBoxContainer/Label
-onready var scrubber = $HBoxContainer/Scrubber
+onready var label = $VBoxContainer/Timeline/Label
+onready var scrubber = $VBoxContainer/Timeline/Scrubber
 
 class FrameState extends Reference:
 	var time:float
@@ -124,18 +124,28 @@ func _physics_process(delta):
 func _unhandled_input(event):
 	var seek_speed = 1.0
 	
-	if event.is_action_pressed("ui_left", true):
-		yield(get_tree(), "physics_frame")
-		seek(max(current_frame-seek_speed, 0))
+	if event.is_action_pressed("Left", true):
+		if playing == PLAYING.PAUSED:
+			yield(get_tree(), "physics_frame")
+			seek(max(current_frame-1, 0))
+		else:
+			pass;
 	
-	if event.is_action_pressed("ui_right", true):
-		yield(get_tree(), "physics_frame")
-		seek(min(current_frame+seek_speed, cached_frames.size()))
+	if event.is_action_pressed("Right", true):
+		if playing == PLAYING.PAUSED:
+			yield(get_tree(), "physics_frame")
+			seek(min(current_frame+1, cached_frames.size()-1))
+		else:
+			pass;
+		
 
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("ui_time_control"):
 		if playing == PLAYING.PAUSED:
 			cut_cached_frames(current_frame)
 			set_playing(PLAYING.PLAYING)
+			if not Engine.is_in_physics_frame():
+				yield(get_tree(), "physics_frame")
+				seek(current_frame);
 		else:
 			set_playing(PLAYING.PAUSED)
 

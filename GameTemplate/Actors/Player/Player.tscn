@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 
-[node name="Player" type="RigidBody2D" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "timed",
 ]]
 script = ExtResource( 1 )
